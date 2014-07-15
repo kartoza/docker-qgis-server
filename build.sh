@@ -1,1 +1,1 @@
-docker.io build -t kartoza/qgis-server:1 .
+docker.io build -t kartoza/qgis-server:latest .
