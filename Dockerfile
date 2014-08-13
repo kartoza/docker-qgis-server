@@ -1,6 +1,6 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 FROM debian:stable
-MAINTAINER Tim Sutton<tim@linfiniti.com>
+MAINTAINER Tim Sutton<tim@kartoza.com>
 RUN  export DEBIAN_FRONTEND=noninteractive
 ENV  DEBIAN_FRONTEND noninteractive
 RUN  dpkg-divert --local --rename --add /sbin/initctl
@@ -37,4 +37,4 @@ RUN /setup.sh
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 
-CMD /start.s
+CMD apachectl -D FOREGROUND
