@@ -1,11 +1,11 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 FROM debian:stable
 MAINTAINER Tim Sutton<tim@linfiniti.com>
+ENV foo bar
 
 RUN  export DEBIAN_FRONTEND=noninteractive
 ENV  DEBIAN_FRONTEND noninteractive
 RUN  dpkg-divert --local --rename --add /sbin/initctl
-#RUN  ln -s /bin/true /sbin/initctl
 
 RUN echo "deb     http://qgis.org/debian wheezy main" >> /etc/apt/sources.list
 RUN gpg --keyserver keyserver.ubuntu.com --recv 47765B75
