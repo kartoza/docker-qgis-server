@@ -258,10 +258,10 @@
                 <multilineenabled fieldname="" on=""/>
                 <selectedonly on=""/>
             </labelattributes>
-            <editform></editform>
+            <editform>.</editform>
             <editforminit></editforminit>
             <featformsuppress>0</featformsuppress>
-            <annotationform></annotationform>
+            <annotationform>.</annotationform>
             <editorlayout>generatedlayout</editorlayout>
             <excludeAttributesWMS/>
             <excludeAttributesWFS/>
@@ -286,28 +286,28 @@
         </maplayer>
     </projectlayers>
     <properties>
-        <WMSContactPerson type="QString"></WMSContactPerson>
-        <WMSOnlineResource type="QString"></WMSOnlineResource>
-        <WMSContactOrganization type="QString"></WMSContactOrganization>
+        <WMSContactPerson type="QString">Tim Sutton and Richard Duivenvoorde</WMSContactPerson>
+        <WMSOnlineResource type="QString">http://demo.qgis.org/cgi-bin/qgis_mapserv.fcgi?map=/web/helloworld.qgs</WMSOnlineResource>
+        <WMSContactOrganization type="QString">QGIS.org</WMSContactOrganization>
         <WMSKeywordList type="QStringList">
-            <value></value>
+            <value>QGIS Server World</value>
         </WMSKeywordList>
-        <WFSUrl type="QString"></WFSUrl>
+        <WFSUrl type="QString">http://demo.qgis.org/cgi-bin/qgis_mapserv.fcgi?map=/web/helloworld.qgs</WFSUrl>
         <Paths>
             <Absolute type="bool">false</Absolute>
         </Paths>
-        <WMSServiceTitle type="QString"></WMSServiceTitle>
+        <WMSServiceTitle type="QString">QGIS Server Demo</WMSServiceTitle>
         <WFSLayers type="QStringList"/>
-        <WMSContactMail type="QString"></WMSContactMail>
+        <WMSContactMail type="QString">tim@qgis.org</WMSContactMail>
         <PositionPrecision>
             <DecimalPlaces type="int">2</DecimalPlaces>
             <Automatic type="bool">true</Automatic>
             <DegreeFormat type="QString">D</DegreeFormat>
         </PositionPrecision>
         <WCSUrl type="QString"></WCSUrl>
-        <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
+        <WMSServiceCapabilities type="bool">true</WMSServiceCapabilities>
         <WMSContactPhone type="QString"></WMSContactPhone>
-        <WMSServiceAbstract type="QString"></WMSServiceAbstract>
+        <WMSServiceAbstract type="QString">This is a simple demo map of QGIS MapServer</WMSServiceAbstract>
         <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
         <Measure>
             <Ellipsoid type="QString">NONE</Ellipsoid>
@@ -332,7 +332,7 @@
         <Macros>
             <pythonCode type="QString"></pythonCode>
         </Macros>
-        <WMSAccessConstraints type="QString"></WMSAccessConstraints>
+        <WMSAccessConstraints type="QString">none</WMSAccessConstraints>
         <WCSLayers type="QStringList"/>
         <SpatialRefSys>
             <ProjectCRSProj4String type="QString">+proj=longlat +datum=WGS84 +no_defs</ProjectCRSProj4String>
@@ -349,6 +349,6 @@
         </DefaultStyles>
         <WMSFees type="QString"></WMSFees>
         <WMSImageQuality type="int">90</WMSImageQuality>
-        <WMSUrl type="QString"></WMSUrl>
+        <WMSUrl type="QString">http://demo.qgis.org/cgi-bin/qgis_mapserv.fcgi?map=/web/helloworld.qgs</WMSUrl>
     </properties>
 </qgis>
