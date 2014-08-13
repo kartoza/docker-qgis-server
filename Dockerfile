@@ -23,6 +23,9 @@ RUN apt-get install -y qgis qgis-mapserver apache2 libapache2-mod-fcgid
 
 EXPOSE 80
 
+ADD apache.conf /etc/apache2/sites-available/default
+ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
+
 # Run any additional tasks here that are too tedious to put in
 # this dockerfile directly.
 ADD setup.sh /setup.sh
