@@ -1,8 +1,6 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 FROM debian:stable
 MAINTAINER Tim Sutton<tim@linfiniti.com>
-ENV foo bar
-
 RUN  export DEBIAN_FRONTEND=noninteractive
 ENV  DEBIAN_FRONTEND noninteractive
 RUN  dpkg-divert --local --rename --add /sbin/initctl
@@ -21,7 +19,7 @@ RUN apt-get -y update
 #-------------Application Specific Stuff ----------------------------------------------------
 
 
-RUN apt-get install -y qgis qgis-mapserver
+RUN apt-get install -y qgis qgis-mapserver apache2 libapache2-mod-fcgid
 
 EXPOSE 80
 
@@ -36,4 +34,4 @@ RUN /setup.sh
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 
-CMD /start.sh
+CMD /start.s
