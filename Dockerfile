@@ -14,7 +14,7 @@ RUN gpg --export --armor 47765B75 | apt-key add -
 # Or comment this line out if you do not with to use caching
 ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
 
-RUN apt-get -y update
+#RUN apt-get -y update
 
 #-------------Application Specific Stuff ----------------------------------------------------
 
@@ -26,15 +26,23 @@ EXPOSE 80
 ADD apache.conf /etc/apache2/sites-available/default
 ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 
-# Run any additional tasks here that are too tedious to put in
-# this dockerfile directly.
-ADD setup.sh /setup.sh
-RUN chmod 0755 /setup.sh
-RUN /setup.sh
+# Set up the postgis services file
+# On the client side when referencing postgis
+# layers, simply refer to the database using
+# Service: gis
+# instead of filling in all the host etc details.
+# In the container this service will connect 
+# with no encryption for optimal performance
+# on the client (i.e. your desktop) you should
+# connect using a similar service file but with
+# connection ssl option set to require
 
+ADD pg_service.conf /etc/pg_service.conf
+USER www-data
 
-# Called on first run of docker - will run supervisor
-ADD start.sh /start.sh
-RUN chmod 0755 /start.sh
+# This is so the qgis mapserver uses the correct
+# pg service file
+ENV PGSERVICEFILE /etc/pg_service.conf
 
+# Now launch apache in the foreground
 CMD apachectl -D FOREGROUND
