@@ -6,8 +6,8 @@ ENV  DEBIAN_FRONTEND noninteractive
 RUN  dpkg-divert --local --rename --add /sbin/initctl
 
 RUN echo "deb     http://qgis.org/debian wheezy main" >> /etc/apt/sources.list
-RUN gpg --keyserver keyserver.ubuntu.com --recv 47765B75
-RUN gpg --export --armor 47765B75 | apt-key add -
+RUN gpg --keyserver keyserver.ubuntu.com --recv DD45F6C3
+RUN gpg --export --armor DD45F6C3 | apt-key add -
 
 # Use local cached debs from host (saves your bandwidth!)
 # Change ip below to that of your apt-cacher-ng host
