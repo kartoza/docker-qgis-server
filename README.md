@@ -28,11 +28,11 @@ docker run --name "qgis-server" \
     -p 8081:80 -d -t kartoza/qgis-server
 ```
 
-Replace with an absolute path on your filesystem. That folder should contain
-the .qgs project files you want to publish and all the data should be relative
-to the project files and within the mounted volume. See
-https://github.com/kartoza/maps.kartoza.com for an example of a project layout
-that we use to power http://maps.kartoza.com
+Replace ``<path_to_local_qgis_project_folder>`` with an absolute path on your
+filesystem. That folder should contain the .qgs project files you want to
+publish and all the data should be relative to the project files and within the
+mounted volume. See https://github.com/kartoza/maps.kartoza.com for an example
+of a project layout that we use to power http://maps.kartoza.com
 
 
 Also consider looking at https://github.com/kartoza/docker-qgis-orchestration
