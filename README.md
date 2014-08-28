@@ -16,7 +16,7 @@ docker build -t kartoza/qgis-server git://github.com/kartoza/qgis-server
 To run a container do:
 
 ```
-docker run --name "qgis-server" -p 2222:22 -p 8080:80 -d -t kartoza/docker-qgis-server
+docker run --name "qgis-server" -p 2222:22 -p 8080:80 -d -t kartoza/qgis-server
 ```
 
 Probably you will want to mount the /web folder with local volume
