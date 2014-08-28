@@ -10,7 +10,7 @@ etc of this implementation before using in a production environment.
 To build the image do:
 
 ```
-docker build -t kartoza/qgis-server git://github.com/kartoza/qgis-server
+docker build -t kartoza/qgis-server git://github.com/kartoza/docker-qgis-server
 ```
 
 To run a container do:
