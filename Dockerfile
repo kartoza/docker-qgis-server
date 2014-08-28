@@ -38,7 +38,7 @@ ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 # connection ssl option set to require
 
 ADD pg_service.conf /etc/pg_service.conf
-USER www-data
+#USER www-data
 
 # This is so the qgis mapserver uses the correct
 # pg service file
