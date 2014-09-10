@@ -7,11 +7,22 @@ A simple docker container that runs QGIS MapServer.
 **Note** this is a demonstrator project only and you should revise the security
 etc of this implementation before using in a production environment.
 
-To build the image do:
+To use the image, either pull the latest trusted build from 
+https://registry.hub.docker.com/u/kartoza/docker-qgis-server/ by doing this:
+
+```
+docker pull kartoza/docker-qgis-server
+```
+
+or build the image yourself like this:
 
 ```
 docker build -t kartoza/qgis-server git://github.com/kartoza/docker-qgis-server
 ```
+
+**Note:** The 'build it yourself' option above will build from the develop branch
+wheras the trusted builds are against the master branch.
+
 
 To run a container do:
 
