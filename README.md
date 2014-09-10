@@ -11,7 +11,7 @@ To use the image, either pull the latest trusted build from
 https://registry.hub.docker.com/u/kartoza/docker-qgis-server/ by doing this:
 
 ```
-docker pull kartoza/docker-qgis-server
+docker pull kartoza/qgis-server
 ```
 
 or build the image yourself like this:
