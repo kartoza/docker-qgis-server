@@ -1,13 +1,6 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM debian:stable
+FROM kartoza/qgis-desktop
 MAINTAINER Tim Sutton<tim@kartoza.com>
-RUN  export DEBIAN_FRONTEND=noninteractive
-ENV  DEBIAN_FRONTEND noninteractive
-RUN  dpkg-divert --local --rename --add /sbin/initctl
-
-RUN echo "deb     http://qgis.org/debian wheezy main" >> /etc/apt/sources.list
-RUN gpg --keyserver keyserver.ubuntu.com --recv DD45F6C3
-RUN gpg --export --armor DD45F6C3 | apt-key add -
 
 # Use local cached debs from host (saves your bandwidth!)
 # Change ip below to that of your apt-cacher-ng host
@@ -19,11 +12,11 @@ RUN apt-get -y update
 #-------------Application Specific Stuff ----------------------------------------------------
 
 
-RUN apt-get install -y qgis qgis-mapserver apache2 libapache2-mod-fcgid
+RUN apt-get install -y qgis-mapserver apache2 libapache2-mod-fcgid
 
 EXPOSE 80
 
-ADD apache.conf /etc/apache2/sites-available/default
+ADD apache.conf /etc/apache2/sites-enabled/000-default.conf
 ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 
 # Set up the postgis services file
@@ -38,8 +31,6 @@ ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 # connection ssl option set to require
 
 ADD pg_service.conf /etc/pg_service.conf
-#USER www-data
-
 # This is so the qgis mapserver uses the correct
 # pg service file
 ENV PGSERVICEFILE /etc/pg_service.conf
