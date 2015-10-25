@@ -12,7 +12,7 @@ RUN apt-get -y update
 #-------------Application Specific Stuff ----------------------------------------------------
 
 
-RUN apt-get install -y qgis-mapserver apache2 libapache2-mod-fcgid
+RUN apt-get install -y apache2 libapache2-mod-fcgid
 
 EXPOSE 80
 
