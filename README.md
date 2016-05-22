@@ -16,9 +16,8 @@ etc of this implementation before using in a production environment.
 
 # Example use with docker compose
 
-Here is a contrived example showing how you can run QGIS Desktop
-from in a docker container using docker-compose. Note you may
-need to run ``xhost +`` first. Example ``docker-compose`` follows:
+Here is a contrived example showing how you can run QGIS Server
+from in a docker container using docker-compose. Example ``docker-compose`` follows:
 
 ```
 db:
