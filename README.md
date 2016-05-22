@@ -3,7 +3,7 @@ QGIS Server for Docker
 
 A simple docker container that runs QGIS Server
 
-This image uses the [QGIS Desktop docker image](https://github.com/kartoza/docker-qgis-desktop).
+This image uses the [QGIS Desktop docker image](https://github.com/kartoza/docker-qgis-desktop) as its base.
 
 # License
 
