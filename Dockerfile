@@ -15,6 +15,7 @@ MAINTAINER Tim Sutton<tim@kartoza.com>
 # on the client (i.e. your desktop) you should
 # connect using a similar service file but with
 # connection ssl option set to require
+RUN cp /usr/bin/qgis_mapserv.fcgi /usr/lib/cgi-bin/
 
 ADD pg_service.conf /etc/pg_service.conf
 # This is so the qgis mapserver uses the correct
