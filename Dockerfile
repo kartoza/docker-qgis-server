@@ -1,23 +1,9 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM kartoza/qgis-desktop
+FROM kartoza/qgis-desktop:master
 MAINTAINER Tim Sutton<tim@kartoza.com>
-
-# Use local cached debs from host (saves your bandwidth!)
-# Change ip below to that of your apt-cacher-ng host
-# Or comment this line out if you do not with to use caching
-ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
-
-RUN apt-get -y update
 
 #-------------Application Specific Stuff ----------------------------------------------------
 
-
-RUN apt-get install -y apache2 libapache2-mod-fcgid
-
-EXPOSE 80
-
-ADD apache.conf /etc/apache2/sites-enabled/000-default.conf
-ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
 
 # Set up the postgis services file
 # On the client side when referencing postgis
@@ -35,5 +21,15 @@ ADD pg_service.conf /etc/pg_service.conf
 # pg service file
 ENV PGSERVICEFILE /etc/pg_service.conf
 
-# Now launch apache in the foreground
-CMD apachectl -D FOREGROUND
+# Configuration for spawning FCGI with 15 listeners and a backlog of 1024
+# you can override this in your docker.conf
+ENV FCGI_CHILDREN 15
+ENV FCGI_BACKLOG 1024 
+
+EXPOSE 9999
+
+USER www-data
+
+CMD spawn-fcgi -F FCGI_CHILDREN -b FCGI_BACKLOG -d /gis -p 9999 -n -- /usr/lib/qgis_mapserv.fcgi && tail -f /dev/null
+#CMD ["spawn-fcgi", "-F FCGI_CHILDREN", "-b FCGI_BACKLOG", "-d /gis", "-p 9999", "-n", "--", "/usr/lib/qgis_mapserv.fcgi", '&&', 'cat', '/dev/null']
+#CMD ["spawn-fcgi", "-u www-data", "-G www-data", "-F FCGI_CHILDREN", "-b FCGI_BACKLOG", "-d /gis", "-p 9999", "--", "/usr/lib/qgis_mapserv.fcgi"]
