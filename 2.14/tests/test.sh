@@ -4,8 +4,8 @@ set -e
 docker stop server || true
 docker rm server || true
 
-docker build -t qgis-server ..
-docker run -d -p 8380:80 --volume=$PWD:/project --name server qgis-server
+docker build -t kartoza/qgis-server:2.14.6 ..
+docker run -d -p 8380:80 --volume=$PWD:/project --name server kartoza/qgis-server:2.14.6
 
 URL=http://localhost:8380/
 
