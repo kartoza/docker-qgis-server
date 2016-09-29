@@ -23,6 +23,7 @@ ENV QGIS_SERVER_LOG_FILE /proc/self/fd/1
 ENV QGIS_SERVER_LOG_LEVEL 5
 ENV PGSERVICEFILE /project/pg_service.conf
 ENV QGIS_PROJECT_FILE /project/project.qgs
+ENV QGIS_PLUGINPATH /opt/qgis-server/plugins
 
 COPY runtime /
 
