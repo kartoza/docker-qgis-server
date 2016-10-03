@@ -140,6 +140,7 @@ QGIS_SERVER_LOG_FILE /proc/self/fd/1
 QGIS_SERVER_LOG_LEVEL 5
 PGSERVICEFILE /project/pg_service.conf
 QGIS_PROJECT_FILE /project/project.qgs
+QGIS_PLUGINPATH /opt/qgis-server/plugins
 ```
 
 Probably you will want to mount the /project folder with local volume
