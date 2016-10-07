@@ -62,7 +62,7 @@ wheras the trusted builds are against the master branch.
 To run a container do:
 
 ```
-docker run --name "qgis-server" -p 8081:80 -d -t kartoza/qgis-server
+docker run --name "qgis-server" -p 9999:80 -d -t kartoza/qgis-server
 ```
 
 
@@ -152,10 +152,10 @@ directory.
 
 ```
 ./build.sh; docker kill server; docker rm server; 
-docker run --name="server" \
+docker run --name="qgis-server" \
     -d -p 9999:80 \
     kartoza/qgis-server:LTR
- docker logs server
+ docker logs qgis-server
 ```
 
 Replace ``<path_to_local_qgis_project_folder>`` with an absolute path on your
@@ -168,7 +168,7 @@ of a project layout that we use to power http://maps.kartoza.com
 Accessing the services:
 
 Simply entering the URL of the docker container with its port number
-will respond with a valid OGC response if you use this utl in QGIS 
+will respond with a valid OGC response if you use this url in QGIS 
 'add WMS layer' dialog.
 
 http://192.168.99.101:9999/
