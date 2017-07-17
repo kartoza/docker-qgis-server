@@ -1,40 +1,35 @@
-#--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 FROM kartoza/qgis-desktop:2.18.10
+
+# Based off work by
+# Patrick Valsecchi<patrick.valsecchi@camptocamp.com>
 MAINTAINER Tim Sutton<tim@kartoza.com>
 
-# Use local cached debs from host (saves your bandwidth!)
-# Change ip below to that of your apt-cacher-ng host
-# Or comment this line out if you do not with to use caching
-ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
+# A few variables needed by apache
+ENV APACHE_CONFDIR /etc/apache2
+ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_RUN_DIR /var/run/apache2
+ENV APACHE_PID_FILE $APACHE_RUN_DIR/apache2.pid
+ENV APACHE_LOCK_DIR /var/lock/apache2
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV LANG C
 
-RUN apt-get -y update
+COPY build /build/scripts
+RUN /build/scripts/getDeps.sh && \
+    /build/scripts/apache.sh
 
-#-------------Application Specific Stuff ----------------------------------------------------
+# A few tunable variables for QGIS
+ENV QGIS_DEBUG 5
+ENV QGIS_LOG_FILE /proc/self/fd/1
+ENV QGIS_SERVER_LOG_FILE /proc/self/fd/1
+ENV QGIS_SERVER_LOG_LEVEL 5
+ENV PGSERVICEFILE /project/pg_service.conf
+ENV QGIS_PROJECT_FILE /project/project.qgs
+ENV QGIS_PLUGINPATH /opt/qgis-server/plugins
 
-
-RUN apt-get install -y apache2 libapache2-mod-fcgid
+COPY runtime /
 
 EXPOSE 80
 
-ADD apache.conf /etc/apache2/sites-enabled/000-default.conf
-ADD fcgid.conf /etc/apache2/mods-available/fcgid.conf
-
-# Set up the postgis services file
-# On the client side when referencing postgis
-# layers, simply refer to the database using
-# Service: gis
-# instead of filling in all the host etc details.
-# In the container this service will connect 
-# with no encryption for optimal performance
-# on the client (i.e. your desktop) you should
-# connect using a similar service file but with
-# connection ssl option set to require
-RUN cp /usr/bin/qgis_mapserv.fcgi /usr/lib/cgi-bin/
-
-ADD pg_service.conf /etc/pg_service.conf
-# This is so the qgis mapserver uses the correct
-# pg service file
-ENV PGSERVICEFILE /etc/pg_service.conf
-
-# Now launch apache in the foreground
-CMD apachectl -D FOREGROUND
+CMD ["apache2", "-DFOREGROUND"]
