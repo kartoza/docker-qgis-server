@@ -176,7 +176,7 @@ http://192.168.99.101:9999/
 
 Authors:
 
-Tim Sutton (tim@linfiniti.com) - May 2014
+Tim Sutton (tim@kartoza.com) - May 2014
 
 Acknowledgement:
 
