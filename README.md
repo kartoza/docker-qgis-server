@@ -6,7 +6,7 @@ A simple docker container that runs QGIS Server
 This image uses the [QGIS Desktop docker image](https://github.com/kartoza/docker-qgis-desktop) as its base.
 
 Please see the [canonical documentation](
-http://docs.qgis.org/2.14/en/docs/user_manual/working_with_ogc/ogc_server_support.html) 
+http://docs.qgis.org/2.14/en/docs/user_manual/working_with_ogc/ogc_server_support.html)
 for QGIS Server if you need more general info on how QGIS Server works.
 
 
@@ -22,12 +22,12 @@ etc. of this implementation before using in a production environment.
 # QGIS Server documentation
 
 Please see the [canonical documentation](
-http://docs.qgis.org/2.14/en/docs/user_manual/working_with_ogc/ogc_server_support.html) 
+http://docs.qgis.org/2.14/en/docs/user_manual/working_with_ogc/ogc_server_support.html)
 for QGIS Server if you need more general info on how QGIS Server works.
 
 # Usage
 
-To use the image, either pull the latest trusted build from 
+To use the image, either pull the latest trusted build from
 https://registry.hub.docker.com/u/kartoza/qgis-server/ by doing this:
 
 ```
@@ -45,8 +45,6 @@ In this repository you will find a subdirectory for each QGIS version
 supported. Each directory contains a self contained docker project
 and we will maintain all the versioned builds from these containers.
 
-Master should always be considered the latest
-
 You can build the image yourself like this:
 
 ```
@@ -55,16 +53,14 @@ cd docker-qgis-server/2.14
 docker build -t kartoza/qgis-server .
 ```
 
-**Note:** The 'build it yourself' option above will build from the develop branch
-wheras the trusted builds are against the master branch.
-
-
 To run a container do:
 
 ```
 docker run --name "qgis-server" -p 9999:80 -d -t kartoza/qgis-server
 ```
 
+**NOTE:** Again we would like to recommend you run a tagged version rather
+than just the latest since your configuration may break if we change something.
 
 # Example use with docker compose
 
@@ -77,9 +73,9 @@ db:
   environment:
     - USERNAME=docker
     - PASS=docker
-  
+
 qgisserver:
-  image: kartoza/qgis-server:2.14
+  image: kartoza/qgis-server:2.18.10
   hostname: qgis-server
   volumes:
     # Wherever you want to mount your data from
@@ -96,7 +92,7 @@ To run the example do:
 docker-compose up
 ```
 
-You should see QGIS server start up. For more detailed approaches 
+You should see QGIS server start up. For more detailed approaches
 to using and building the QGIS Server container, see below.
 
 **Note:** The database in the above example is stateless (it will be deleted when
@@ -113,7 +109,7 @@ use the following info:
 Apache environment variables
 ============================
 
-Apache will make of the following environment variables. You can 
+Apache will make of the following environment variables. You can
 tweak these by replacing these options in your docker-compose.yml
 or docker run command.
 
@@ -145,13 +141,13 @@ QGIS_PLUGINPATH /opt/qgis-server/plugins
 
 Probably you will want to mount the /project folder with local volume
 that contains some QGIS projects. As you can see above, if no project
-file is specified, QGIS will try to server up /projects/project.qgs by
+file is specified, QGIS will try to serve up /projects/project.qgs by
 default so if you are looking for an easy to share WMS/WFS url, simply
-call your project file project.qgs and mount it in the /projects
+call your project file project.qgs and mount it in the /project
 directory.
 
 ```
-./build.sh; docker kill server; docker rm server; 
+./build.sh; docker kill server; docker rm server;
 docker run --name="qgis-server" \
     -d -p 9999:80 \
     kartoza/qgis-server:LTR
@@ -164,11 +160,13 @@ publish and all the data should be relative to the project files and within the
 mounted volume. See https://github.com/kartoza/maps.kartoza.com for an example
 of a project layout that we use to power http://maps.kartoza.com
 
+An example project folder is provided here for convenience (and we
+use it for validation testing).
 
 Accessing the services:
 
 Simply entering the URL of the docker container with its port number
-will respond with a valid OGC response if you use this url in QGIS 
+will respond with a valid OGC response if you use this url in QGIS
 'add WMS layer' dialog.
 
 http://192.168.99.101:9999/
@@ -182,6 +180,6 @@ Tim Sutton (tim@linfiniti.com) - May 2014
 
 Acknowledgement:
 
-During the Girona QGIS hackfest in 2016, Patrick Valsecchi did an 
-almost complete re-write of this image recipe which I have heavily 
+During the Girona QGIS hackfest in 2016, Patrick Valsecchi did an
+almost complete re-write of this image recipe which I have heavily
 based this and the recipe in docker-qgis-desktop on. Thanks Patrick!

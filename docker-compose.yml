@@ -7,7 +7,7 @@ db:
     - PASS=docker
 
 qgisserver:
-  build : .
+  build : 2.18
   #image: kartoza/qgis-server
   hostname: qgis-server
   volumes:
