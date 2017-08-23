@@ -1,4 +1,4 @@
-FROM kartoza/qgis-desktop:2.18.10
+FROM kartoza/qgis-desktop:2.18.12
 
 # Based off work by
 # Patrick Valsecchi<patrick.valsecchi@camptocamp.com>
