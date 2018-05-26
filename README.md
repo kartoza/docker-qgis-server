@@ -5,25 +5,20 @@ A simple docker container that runs QGIS Server
 
 This image uses the [QGIS Desktop docker image](https://github.com/kartoza/docker-qgis-desktop) as its base.
 
-Please see the [canonical documentation](
-http://docs.qgis.org/2.14/en/docs/user_manual/working_with_ogc/ogc_server_support.html)
-for QGIS Server if you need more general info on how QGIS Server works.
-
-
-
 **Note** You should revise the security
 etc. of this implementation before using in a production environment.
+
+# QGIS Server documentation
+
+Please see the [canonical documentation](
+http://docs.qgis.org/2.18/en/docs/user_manual/working_with_ogc/ogc_server_support.html)
+for QGIS Server if you need more general info on how QGIS Server works.
+
 
 # License
 
 [GPL V2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 
-
-# QGIS Server documentation
-
-Please see the [canonical documentation](
-http://docs.qgis.org/2.14/en/docs/user_manual/working_with_ogc/ogc_server_support.html)
-for QGIS Server if you need more general info on how QGIS Server works.
 
 # Usage
 
@@ -49,18 +44,46 @@ You can build the image yourself like this:
 
 ```
 git clone git://github.com/kartoza/docker-qgis-server
-cd docker-qgis-server/2.14
+cd docker-qgis-server/2.18
 docker build -t kartoza/qgis-server .
 ```
 
 To run a container do:
 
 ```
-docker run --name "qgis-server" -p 9999:80 -d -t kartoza/qgis-server
+docker run --name "qgis-server" -p 8080:80 -d -t kartoza/qgis-server
 ```
+
+`http://localhost:8080` should show QGIS Server, with an error because it 
+couldn't find a QGIS project to parse.
 
 **NOTE:** Again we would like to recommend you run a tagged version rather
 than just the latest since your configuration may break if we change something.
+
+If you have a single QGIS project on your host to publish, you can use this command:
+```
+docker run --name "qgis-server" -v /path/to/your/project_folder/:/project -p 8080:80 -d -t kartoza/qgis-server:LTR
+
+# Use the default test project provided by this repository in the project folder:
+docker run --name "qgis-server" -v $(PWD)/project/:/project -p 8080:80 -d -t kartoza/qgis-server:LTR
+```
+The container will try to load the project located in `/project` called `project.qgs`.
+You can override this setting using environment variable, see below about apache configuration.
+`http://localhost:8080` should show QGIS Server with your correct project.
+`http://localhost:8080/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities` should give the GetCapabilities.
+
+However, if you have many QGIS projects, you need to give the path to the project in the URL:
+We mount our project folder in `/gis` in this example to show that the name is not important.
+**Be careful, you need to set the environment variable `QGIS_PROJECT_FILE` to none,
+as your project won't be found under `/project/project.qgs`.
+```
+docker run --name "qgis-server" -e QGIS_PROJECT_FILE='' -v /path/to/your/project_folder:/gis -p 8080:80 -d -t kartoza/qgis-server:LTR
+
+# Use the default test project provided by this repository in the project folder:
+docker run --name "qgis-server" -e QGIS_PROJECT_FILE='' -v $(PWD)/project/:/gis -p 8080:80 -d -t kartoza/qgis-server:LTR
+```
+`http://localhost:8080/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities&MAP=/gis/project.qgs` should give the GetCapabilities.
+
 
 # Example use with docker compose
 
@@ -69,21 +92,21 @@ from in a docker container using docker-compose. Example ``docker-compose`` foll
 
 ```
 db:
-  image: kartoza/postgis:9.4-2.1
+  image: kartoza/postgis:9.6-2.4
   environment:
     - USERNAME=docker
     - PASS=docker
 
 qgisserver:
-  image: kartoza/qgis-server:2.18.10
+  image: kartoza/qgis-server:LTR
   hostname: qgis-server
   volumes:
     # Wherever you want to mount your data from
-    - ./web:/web
+    - ./project:/project
   links:
     - db:db
   ports:
-    - "80801:80"
+    - "8080:80"
 ```
 
 To run the example do:
@@ -94,6 +117,8 @@ docker-compose up
 
 You should see QGIS server start up. For more detailed approaches
 to using and building the QGIS Server container, see below.
+
+`http://localhost:8080` should show QGIS Server.
 
 **Note:** The database in the above example is stateless (it will be deleted when
 running ``docker-compose rm``). If you want to connect to the PG database from docker
@@ -141,7 +166,7 @@ QGIS_PLUGINPATH /opt/qgis-server/plugins
 
 Probably you will want to mount the /project folder with local volume
 that contains some QGIS projects. As you can see above, if no project
-file is specified, QGIS will try to serve up /projects/project.qgs by
+file is specified, QGIS will try to serve up /project/project.qgs by
 default so if you are looking for an easy to share WMS/WFS url, simply
 call your project file project.qgs and mount it in the /project
 directory.
@@ -149,7 +174,7 @@ directory.
 ```
 ./build.sh; docker kill server; docker rm server;
 docker run --name="qgis-server" \
-    -d -p 9999:80 \
+    -d -p 8080:80 \
     kartoza/qgis-server:LTR
  docker logs qgis-server
 ```
@@ -169,8 +194,7 @@ Simply entering the URL of the docker container with its port number
 will respond with a valid OGC response if you use this url in QGIS
 'add WMS layer' dialog.
 
-http://192.168.99.101:9999/
-
+`http://localhost:8080` should show QGIS Server.
 
 -----------
 
