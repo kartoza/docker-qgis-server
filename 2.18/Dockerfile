@@ -19,6 +19,21 @@ COPY build /build/scripts
 RUN /build/scripts/getDeps.sh && \
     /build/scripts/apache.sh
 
+#
+# Add any qgis server plugins we want to ship by default
+#
+
+# Add QGIS Server on the fly project creation support
+# see https://github.com/kartoza/otf-project
+WORKDIR /opt/qgis-server/plugins
+ARG OTF_PROJECT_TAG=master
+RUN git clone --branch ${OTF_PROJECT_TAG} --depth 1 https://github.com/kartoza/otf-project.git
+
+#
+# End of server plugins section
+#
+
+
 # A few tunable variables for QGIS
 ENV QGIS_DEBUG 5
 ENV QGIS_LOG_FILE /proc/self/fd/1
