@@ -196,9 +196,16 @@ will respond with a valid OGC response if you use this url in QGIS
 
 `http://localhost:8080` should show QGIS Server.
 
+
+# Included QGIS Server plugins
+
+QGIS Server supports server-side plugins written in python. The following plugins are shipped by default with this image:
+
+* [On-the-fly project creation](https://github.com/kartoza/otf-project): This new service parameter will create a QGIS project using one or many layers existing on the file system. See the project README for details.
+
 -----------
 
-Authors:
+# Authors:
 
 Tim Sutton (tim@kartoza.com) - May 2014
 
