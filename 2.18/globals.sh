@@ -2,7 +2,7 @@
 ##
 ## GLOBALS for use by build, test, run etc scripts
 ##
-BUGFIX=17
+BUGFIX=20
 MINOR=18
 MAJOR=2
 TESTPORT=9909
