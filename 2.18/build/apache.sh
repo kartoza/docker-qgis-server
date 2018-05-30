@@ -2,7 +2,7 @@
 set -e
 
 # Disable the modules we don't need and enable the modules we need
-a2enmod fcgid
+a2enmod fcgid headers
 a2dismod -f auth_basic authn_file authn_core authz_host authz_user autoindex dir status
 rm /etc/apache2/mods-enabled/alias.conf
 
