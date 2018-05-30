@@ -25,9 +25,12 @@ RUN /build/scripts/getDeps.sh && \
 
 # Add QGIS Server on the fly project creation support
 # see https://github.com/kartoza/otf-project
-WORKDIR /opt/qgis-server/plugins
-ARG OTF_PROJECT_TAG=master
-RUN git clone --branch ${OTF_PROJECT_TAG} --depth 1 https://github.com/kartoza/otf-project.git
+
+# Not supported yet, needs python 3 
+
+#WORKDIR /opt/qgis-server/plugins
+#ARG OTF_PROJECT_TAG=master
+#RUN git clone --branch ${OTF_PROJECT_TAG} --depth 1 https://github.com/kartoza/otf-project.git
 
 #
 # End of server plugins section
