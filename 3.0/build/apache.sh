@@ -9,6 +9,12 @@ rm /etc/apache2/mods-enabled/alias.conf
 mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR
 
 mv /usr/bin/qgis_mapserv.fcgi /usr/lib/cgi-bin/
+# Temporary hack because the compiled fcgi looks for modules in
+# /usr/lib/lib/qgis/server  ... still need to figure out why
+# For now we just move the modules to the expected path
+mkdir /usr/lib/lib
+mv /usr/lib/qgis /usr/lib/lib
+
 
 # Make sure logs go to STDOUT
 sed -ri '
