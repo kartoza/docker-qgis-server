@@ -3,6 +3,8 @@
 # QGIS 2.18 LTR - on port 8080 publishing contents of /project
 # QGIS 3.0 - on port 8081 publishing contents of /project-qgis3
 
+# Please read the accompanying README for more details.
+
 db:
   image: kartoza/postgis:9.6-2.4
   #volumes:
@@ -16,6 +18,10 @@ qgisserver2:
   image: kartoza/qgis-server:LTR
   hostname: qgis-server
   environment:
+    # set to '' if you plan on hosting 
+    # multiple projects on this server an
+    # then add map=<path to project> to your GET
+    # requests
     - QGIS_PROJECT_FILE=/project/project.qgs
     # 0 = highest level, shows all messages
     # 5 = very quiet
@@ -32,6 +38,10 @@ qgisserver3:
   image: kartoza/qgis-server:3.0.3
   hostname: qgis-server
   environment:
+    # set to '' if you plan on hosting 
+    # multiple projects on this server an
+    # then add map=<path to project> to your GET
+    # requests
     - QGIS_PROJECT_FILE=/project/project.qgs
     # 0 = highest level, shows all messages
     # 5 = very quiet

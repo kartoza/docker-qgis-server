@@ -74,8 +74,10 @@ You can override this setting using environment variable, see below about apache
 
 However, if you have many QGIS projects, you need to give the path to the project in the URL:
 We mount our project folder in `/gis` in this example to show that the name is not important.
-**Be careful, you need to set the environment variable `QGIS_PROJECT_FILE` to none,
+
+**Be careful:** you need to set the environment variable `QGIS_PROJECT_FILE` to none,
 as your project won't be found under `/project/project.qgs`.
+
 ```
 docker run --name "qgis-server" -e QGIS_PROJECT_FILE='' -v /path/to/your/project_folder:/gis -p 8080:80 -d -t kartoza/qgis-server:LTR
 
@@ -128,6 +130,9 @@ use the following info:
 * database: gis
 * user: docker
 * password: docker
+
+Please see the [provided docker-compose](https://github.com/kartoza/docker-qgis-server/blob/develop/docker-compose.yml) example which 
+includes examples for both QGIS Server 2/LTR and QGIS Server 3.
 
 
 
