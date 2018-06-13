@@ -1,17 +1,45 @@
+# Example QGIS Server docker compose
+# This file will run two QGIS Server instances
+# QGIS 2.18 LTR - on port 8080 publishing contents of /project
+# QGIS 3.0 - on port 8081 publishing contents of /project-qgis3
+
 db:
-  image: kartoza/postgis:9.4-2.1
+  image: kartoza/postgis:9.6-2.4
   #volumes:
     #- ./pg/postgres_data:/var/lib/postgresql
   environment:
     - USERNAME=docker
     - PASS=docker
 
-qgisserver:
-  build : 2.18
-  #image: kartoza/qgis-server
+qgisserver2:
+  #build : 2.18
+  image: kartoza/qgis-server:LTR
   hostname: qgis-server
+  environment:
+    - QGIS_PROJECT_FILE=/project/project.qgs
+    # 0 = highest level, shows all messages
+    # 5 = very quiet
+    - QGIS_SERVER_LOG_LEVEL=0
   volumes:
-    - ./gis:/gis
+    - ./project:/project
+  ports:
+    - "8080:80"
+  links:
+    - db:db
+
+qgisserver3:
+  #build : 3,0
+  image: kartoza/qgis-server:3.0.3
+  hostname: qgis-server
+  environment:
+    - QGIS_PROJECT_FILE=/project/project.qgs
+    # 0 = highest level, shows all messages
+    # 5 = very quiet
+    - QGIS_SERVER_LOG_LEVEL=0
+  volumes:
+    - ./project-qgis3:/project
+  ports:
+    - "8081:80"
   links:
     - db:db
 

@@ -164,6 +164,9 @@ QGIS_PROJECT_FILE /project/project.qgs
 QGIS_PLUGINPATH /opt/qgis-server/plugins
 ```
 
+**Note:** please consult the [QGIS Server documentation](https://docs.qgis.org/2.18/en/docs/user_manual/working_with_ogc/server/config.html) for details on the options you 
+can pass to QGIS Server.
+
 Probably you will want to mount the /project folder with local volume
 that contains some QGIS projects. As you can see above, if no project
 file is specified, QGIS will try to serve up /project/project.qgs by
