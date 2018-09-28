@@ -1,4 +1,7 @@
-FROM kartoza/qgis-desktop:3.0.3
+# using ARG in FROM requires min v17.05.0-ce
+ARG DOCKER_TAG=release-3_2
+
+FROM qgis/qgis:${DOCKER_TAG}
 
 # Based off work by
 # Patrick Valsecchi<patrick.valsecchi@camptocamp.com>
