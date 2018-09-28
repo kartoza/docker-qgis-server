@@ -1,5 +1,5 @@
 # using ARG in FROM requires min v17.05.0-ce
-ARG DOCKER_TAG=release-3_2
+ARG DOCKER_TAG=final-3_2_3
 
 FROM qgis/qgis:${DOCKER_TAG}
 
@@ -41,6 +41,8 @@ RUN /build/scripts/getDeps.sh && \
 
 
 # A few tunable variables for QGIS
+ENV FCGI_IO_TIMEOUT 120
+ENV QGIS_SERVER_CACHE_SIZE 50
 ENV QGIS_DEBUG 5
 ENV QGIS_LOG_FILE /proc/self/fd/1
 ENV QGIS_SERVER_LOG_FILE /proc/self/fd/1
