@@ -1,11 +1,19 @@
 # using ARG in FROM requires min v17.05.0-ce
 ARG DOCKER_TAG=final-3_2_3
+# To enable Debug Info build with --build-arg CMAKE_BUILD_TYPE=RelWithDebInfo
+ARG CMAKE_BUILD_TYPE=Release
 
-FROM qgis/qgis:${DOCKER_TAG}
+FROM qgis/qgis3-build-deps:${DOCKER_TAG}
 
 # Based off work by
 # Patrick Valsecchi<patrick.valsecchi@camptocamp.com>
 MAINTAINER Tim Sutton<tim@kartoza.com>
+
+# Variables for building qgis-server
+ENV CC=/usr/lib/ccache/clang
+ENV CXX=/usr/lib/ccache/clang++
+ENV QT_SELECT=5
+ENV LANG=C.UTF-8
 
 # A few variables needed by apache
 ENV APACHE_CONFDIR /etc/apache2
@@ -16,11 +24,17 @@ ENV APACHE_RUN_DIR /var/run/apache2
 ENV APACHE_PID_FILE $APACHE_RUN_DIR/apache2.pid
 ENV APACHE_LOCK_DIR /var/lock/apache2
 ENV APACHE_LOG_DIR /var/log/apache2
-ENV LANG C
 
 COPY build /build/scripts
 RUN /build/scripts/getDeps.sh && \
     /build/scripts/apache.sh
+
+# Build QGIS-server after apache to reuse image layers
+RUN /build/scripts/getCode.sh && \
+    /build/scripts/make.sh && \
+    /build/scripts/clean.sh && \
+    mv /usr/bin/qgis_mapserv.fcgi /usr/lib/cgi-bin/
+
 
 #
 # Add any qgis server plugins we want to ship by default
