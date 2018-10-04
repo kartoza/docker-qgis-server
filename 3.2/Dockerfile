@@ -1,9 +1,13 @@
 # using ARG in FROM requires min v17.05.0-ce
 ARG DOCKER_TAG=final-3_2_3
-# To enable Debug Info build with --build-arg CMAKE_BUILD_TYPE=RelWithDebInfo
-ARG CMAKE_BUILD_TYPE=Release
-
 FROM qgis/qgis3-build-deps:${DOCKER_TAG}
+
+# To assign build-arg, we apparently need to introduce ARG after FROM again
+ARG DOCKER_TAG
+ENV DOCKER_TAG=${DOCKER_TAG:-final_3_2_3}
+# To enable Debug Info build with --build-arg CMAKE_BUILD_TYPE=RelWithDebInfo
+ARG CMAKE_BUILD_TYPE
+ENV CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Release}
 
 # Based off work by
 # Patrick Valsecchi<patrick.valsecchi@camptocamp.com>
