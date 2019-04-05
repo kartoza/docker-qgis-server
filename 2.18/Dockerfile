@@ -45,6 +45,10 @@ ENV QGIS_PLUGINPATH /opt/qgis-server/plugins
 
 COPY runtime /
 
+COPY entrypoint.sh /entrypoint.sh
+
 EXPOSE 80
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["apache2", "-DFOREGROUND"]
