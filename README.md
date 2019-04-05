@@ -204,6 +204,23 @@ will respond with a valid OGC response if you use this url in QGIS
 
 `http://localhost:8080` should show QGIS Server.
 
+# Extending and modifying Apache conf
+
+The container uses Apache as web frontend by default (out of the box).
+We provided default configuration for running QGIS Server as a standalone container immediately.
+For production usage, or different use case, you might want to extend or change the conf file.
+
+You can do so by providing the conf file into the container, 
+either by extending the base image and committing a conf file in the image, or just volume mount the conf file via docker-compose.
+Either way, specify your new conf file location in an environment variable called `QGIS_CONF_FILE`.
+The entrypoint script then will locate your conf file and activates it by putting the link to `/etc/apache2/conf-enabled` folder.
+
+If you don't need this kind of behaviour when extending the image, simply dump all of your config file into `/etc/apache2/conf-enabled` directory in the container.
+Then turn off the entrypoint script. Regular Docker common sense applies.
+
+As our special use case, we also provide built in conf file in `/etc/apache2/conf-available/qgis-single-worker`.
+This is intended to make Apache work in single thread worker only, because the scaling is handled by container management such as Rancher/Kubernetes.
+This conf file might not be optimized for general use case (it will be slow if deployed as one container only).
 
 # Included QGIS Server plugins
 
